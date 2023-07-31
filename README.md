@@ -1,5 +1,6 @@
 ## Basic API Gateway
-This gateway was generated from our code generator with slight modifications, and supports 2 microservices that are registered to an etcd cluster.
+This gateway was generated from our code generator with slight modifications, and supports 3 microservices that are registered to an etcd cluster.
+The services are EchoService, BizService, HelloService on ports 8000, 9001, 9000 respectively.
 For more information on the exact addresses, refer to the /constants/constants.go file.
 
 
@@ -16,4 +17,3 @@ Once the gateway binary executable is generated, do:
   ./gateway [port number]
 ```
 This runs the gateway on the specified port number.
-

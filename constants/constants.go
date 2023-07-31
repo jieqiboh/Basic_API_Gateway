@@ -13,6 +13,11 @@ const (
 	LOAD_BALANCING = "ROUND_ROBIN"
 )
 const (
+	FILEPATH_TO_BIZSERVICE = "./idl/bizrequests.thrift"
+	BIZSERVICE_NAME        = "BizService" //name registered with svc registry as rpcendpoint
+)
+
+const (
 	FILEPATH_TO_ECHO = "./idl/echo.thrift"
 	ECHO_NAME        = "Echo" //name registered with svc registry as rpcendpoint
 )

@@ -1,14 +1,17 @@
+
 package echoapi
 
 import (
 	"context"
 	"gateway/constants"
+	"log"
+	"strings"
+	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/genericclient"
 	"github.com/cloudwego/kitex/pkg/generic"
 	"github.com/cloudwego/kitex/pkg/loadbalance"
-	"log"
-	"strings"
+	
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -17,6 +20,7 @@ import (
 func ToConstant(s string) string {
 	return strings.ToUpper(strings.ReplaceAll(s, " ", "_"))
 }
+
 
 // Creates generic client "[ServiceName]GenericClient"
 func EchoGenericClient() genericclient.Client {
@@ -35,7 +39,7 @@ func EchoGenericClient() genericclient.Client {
 		klog.Fatalf("new JSON thrift generic failed: %v", err)
 	}
 
-	if constants.LOAD_BALANCING == "ROUND_ROBIN" {
+	if (constants.LOAD_BALANCING == "ROUND_ROBIN") {
 		cli, err := genericclient.NewClient(constants.ECHO_NAME, g, client.WithResolver(r),
 			client.WithLoadBalancer(loadbalance.NewWeightedBalancer()))
 		if err != nil {
@@ -51,8 +55,9 @@ func EchoGenericClient() genericclient.Client {
 	}
 }
 
+
 func DoEcho(ctx context.Context, cli genericclient.Client, req string) (interface{}, error) {
-	//fmt.Print(req)
+	fmt.Print(req)
 	resp, err := cli.GenericCall(ctx, "echo", req)
 
 	if err != nil {
@@ -61,3 +66,4 @@ func DoEcho(ctx context.Context, cli genericclient.Client, req string) (interfac
 	//OWN CODE ABOVE
 	return resp, nil
 }
+

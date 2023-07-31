@@ -1,14 +1,17 @@
+
 package helloapi
 
 import (
 	"context"
 	"gateway/constants"
+	"log"
+	"strings"
+	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/genericclient"
 	"github.com/cloudwego/kitex/pkg/generic"
 	"github.com/cloudwego/kitex/pkg/loadbalance"
-	"log"
-	"strings"
+	
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -17,6 +20,7 @@ import (
 func ToConstant(s string) string {
 	return strings.ToUpper(strings.ReplaceAll(s, " ", "_"))
 }
+
 
 // Creates generic client "[ServiceName]GenericClient"
 func HelloServiceGenericClient() genericclient.Client {
@@ -35,7 +39,7 @@ func HelloServiceGenericClient() genericclient.Client {
 		klog.Fatalf("new JSON thrift generic failed: %v", err)
 	}
 
-	if constants.LOAD_BALANCING == "ROUND_ROBIN" {
+	if (constants.LOAD_BALANCING == "ROUND_ROBIN") {
 		cli, err := genericclient.NewClient(constants.HELLOSERVICE_NAME, g, client.WithResolver(r),
 			client.WithLoadBalancer(loadbalance.NewWeightedBalancer()))
 		if err != nil {
@@ -51,8 +55,9 @@ func HelloServiceGenericClient() genericclient.Client {
 	}
 }
 
+
 func DoHelloMethod(ctx context.Context, cli genericclient.Client, req string) (interface{}, error) {
-	//fmt.Print(req)
+	fmt.Print(req)
 	resp, err := cli.GenericCall(ctx, "HelloMethod", req)
 
 	if err != nil {
@@ -61,3 +66,4 @@ func DoHelloMethod(ctx context.Context, cli genericclient.Client, req string) (i
 	//OWN CODE ABOVE
 	return resp, nil
 }
+
